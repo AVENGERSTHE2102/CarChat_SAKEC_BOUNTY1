@@ -1,15 +1,16 @@
 services:
   - type: web
     name: career-guidance-ai-backend
-    env: python
+    runtime: python
     region: oregon
     plan: free
     rootDir: backend
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT --workers 1
     envVars:
       - key: OPENROUTER_API_KEY
         value: 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
       - key: PYTHON_VERSION
         value: 3.11.9
     healthCheckPath: /
+    autoDeploy: true
