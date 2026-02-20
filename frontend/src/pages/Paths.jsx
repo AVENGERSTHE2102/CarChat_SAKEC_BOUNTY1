@@ -1,8 +1,22 @@
-import React, { useState } from 'react';
-import { Briefcase, TrendingUp, Code, Palette } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Briefcase, TrendingUp, Code, Palette, Sparkles } from 'lucide-react';
 
 const Paths = () => {
     const [selectedPath, setSelectedPath] = useState(null);
+    const [paths, setPaths] = useState([]);
+
+    useEffect(() => {
+        // Load recommendations from localStorage (set by Chat page)
+        const storedRecs = localStorage.getItem('careerRecommendations');
+        if (storedRecs) {
+            const recommendations = JSON.parse(storedRecs);
+            setPaths(recommendations);
+        } else {
+            // Fallback to mock data if no recommendations yet
+            setPaths(mockPaths);
+        }
+    }, []);
+
     const mockPaths = [
         {
             title: "Full Stack Developer",
@@ -39,8 +53,18 @@ const Paths = () => {
                 <p style={{ color: 'var(--text-secondary)' }}>Based on your interests and skills analysis, here are your best matches.</p>
             </div>
 
+            {paths.length === 0 && (
+                <div className="glass-panel" style={{ padding: '48px', textAlign: 'center' }}>
+                    <Sparkles size={48} color="var(--accent-purple)" style={{ margin: '0 auto 16px' }} />
+                    <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>No Recommendations Yet</h3>
+                    <p style={{ color: 'var(--text-secondary)' }}>
+                        Chat with the AI assistant first to get personalized career recommendations!
+                    </p>
+                </div>
+            )}
+
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
-                {mockPaths.map((path, idx) => (
+                {paths.map((path, idx) => (
                     <div key={idx} className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <div style={{
@@ -64,23 +88,23 @@ const Paths = () => {
                                 color: 'var(--accent-blue)',
                                 border: '1px solid rgba(59, 130, 246, 0.2)'
                             }}>
-                                {path.match} Match
+                                {path.match_score || path.match}% Match
                             </div>
                         </div>
 
                         <div>
                             <h3 style={{ fontSize: '20px', marginBottom: '4px' }}>{path.title}</h3>
                             <div style={{ color: 'var(--text-muted)', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                <Briefcase size={14} /> {path.salary}
+                                <Briefcase size={14} /> {path.average_salary || path.salary}
                             </div>
                         </div>
 
                         <p style={{ color: 'var(--text-secondary)', fontSize: '15px', lineHeight: 1.5, flex: 1 }}>
-                            {path.description}
+                            {path.reason || path.description}
                         </p>
 
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: 'auto' }}>
-                            {path.skills.map((skill, sIdx) => (
+                            {(path.required_skills || path.skills).map((skill, sIdx) => (
                                 <span key={sIdx} style={{
                                     fontSize: '12px',
                                     padding: '4px 10px',

@@ -31,9 +31,13 @@ const Chat = () => {
                 message: userText,
                 profile: {
                     name: "User",
-                    education: "Unknown",
+                    current_role: "Student",
+                    education: "Bachelor's degree",
                     interests: [userText],
-                    skills: []
+                    skills: ["Python", "JavaScript"],
+                    experience_years: 0,
+                    preferred_industries: ["technology"],
+                    location: "Remote"
                 }
             });
 
