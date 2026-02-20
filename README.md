@@ -8,11 +8,12 @@ This project requires **Node.js** (v18+ recommended) and `npm`.
 
 ### 1. Install Dependencies
 ```bash
+cd frontend
 npm install
 ```
 
 ### 2. Start the Application
-Run both the React frontend and Python backend simultaneously:
+Run both the React frontend and Python backend simultaneously from the `frontend` folder:
 ```bash
 npm start
 ```
@@ -40,13 +41,15 @@ This project uses `package.json` to manage dependencies. Core libraries include:
 ```text
 project-root/
 ├── README.md             <- This file
-├── package.json          <- Dependencies file
-└── src/                  <- Source code
-    ├── main.jsx          <- Entry point
-    ├── App.jsx           <- Router config
-    ├── index.css         <- Core styling and CSS variables
-    ├── components/       <- Layout components (Header, Sidebar)
-    └── pages/            <- Views (Chat, Paths, Roadmaps)
+├── backend/              <- Python FastAPI server code
+└── frontend/             <- React Vite application
+    ├── package.json      <- Dependencies & start scripts
+    └── src/              <- Source code
+        ├── main.jsx      <- Entry point
+        ├── App.jsx       <- Router config
+        ├── index.css     <- Core styling and CSS variables
+        ├── components/   <- Layout components (Header, Sidebar)
+        └── pages/        <- Views (Chat, Paths, Roadmaps)
 ```
 
 ## Demo
