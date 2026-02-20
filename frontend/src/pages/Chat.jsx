@@ -27,7 +27,7 @@ const Chat = () => {
         try {
             // In a real app, this would build a profile over time.
             // Here we send a basic profile with the user's input as interests.
-            const response = await axios.post('https://carchat-sakec-bounty1.onrender.com/api/chat', {
+            const response = await axios.post('https://career-guidance-ai-backend.onrender.com/api/chat', {
                 message: userText,
                 profile: {
                     name: "User",
